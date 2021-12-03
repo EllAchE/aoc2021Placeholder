@@ -11,9 +11,9 @@ for item in splitList:
     if item[0] == "forward":
         horizontal += int(item[1])
     if item[0] == "down":
-        vertical -= int(item[1])
-    if item[0] == "up":
         vertical += int(item[1])
+    if item[0] == "up":
+        vertical -= int(item[1])
 
 print(horizontal, vertical)
 print(horizontal * vertical)
