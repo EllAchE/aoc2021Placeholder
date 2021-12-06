@@ -45,7 +45,6 @@ lst = [d.strip() for d in data]
 # count number of lines, then count 0s and 1s in each col and see which is greater
 charArrayList = list(map(lambda a : list(a), lst))
 
-
 def scrubLines(charArrayList):
     mostCommonBitList = [0] * len(charArrayList[0])
     for line in charArrayList:
@@ -54,23 +53,63 @@ def scrubLines(charArrayList):
                 mostCommonBitList[i] -= 1
             else:
                 mostCommonBitList[i] += 1
+    return mostCommonBitList
 
-    mostCommonBitList.reverse()
+# def binaryCharListToDecimal(mostCommonBitList):
+#     multiplier = 1
+#     oxygen = co2 = 0
+#     for charCount in mostCommonBitList:
+#         if charCount > 0:
+#             oxygen += multiplier * 1
+#         multiplier *= 2
+#
+#     multiplier = 1
+#     for charCount in mostCommonBitList:
+#         if charCount < 0:
+#             co2 += multiplier * 1
+#         multiplier *= 2
+#
+#     print(oxygen, co2)
+#     print(oxygen * co2)
 
-def binaryCharListToDecimal(mostCommonBitList):
-    multiplier = 1
-    oxygen = co2 = 0
-    for charCount in mostCommonBitList:
-        if charCount > 0:
-            oxygen += multiplier * 1
-        multiplier *= 2
 
-    multiplier = 1
-    for charCount in mostCommonBitList:
-        if charCount < 0:
-            co2 += multiplier * 1
-        multiplier *= 2
+import re
 
-    print(oxygen, co2)
-    print(oxygen * co2)
+mostCommonBitList = scrubLines(charArrayList)
+oxygenSearchStr = ""
+co2SearchStr = ""
 
+oxygen = -1
+co2 = -1
+oxygenSearch = lst
+co2Search = lst
+for i in range(0, len(mostCommonBitList)):
+    mostCommonBitListOxygen = scrubLines(list(map(lambda a : list(a), oxygenSearch)))
+    mostCommonBitOxygen = mostCommonBitListOxygen[i]
+
+    mostCommonBitListCo2 = scrubLines(list(map(lambda a: list(a), co2Search)))
+    mostCommonBitCo2 = mostCommonBitListCo2[i]
+
+    if mostCommonBitOxygen >= 0:
+        oxygenSearchStr += '1'
+
+    else:
+        oxygenSearchStr += '0'
+
+    if mostCommonBitCo2 < 0:
+        co2SearchStr += '1'
+    else:
+        co2SearchStr += '0'
+
+    if oxygen == -1:
+        ro = re.compile(oxygenSearchStr + ".*")
+        oxygenSearch = list(filter(ro.match, oxygenSearch))
+        if len(oxygenSearch) == 1:
+            oxygen = int(oxygenSearch[0], 2)
+    if co2 == -1:
+        rc = re.compile(co2SearchStr + ".*")
+        co2Search = list(filter(rc.match, co2Search))
+        if len(co2Search) == 1:
+            co2 = int(co2Search[0], 2)
+
+print oxygen*co2
