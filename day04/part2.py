@@ -25,28 +25,31 @@ for board in boardWinPossiblities:
 
 solved = False
 drawn = drawOrder[0:4]
-winningBoard = []
+winningBoards = []
+lastCalled = -1
+finalDrawn = []
 for d in drawOrder[4:]:
-    if not solved:
-        drawn.append(d)
-        for board in boardWinPossiblities:
-            for b in board:
-                if set(b) <= set(drawn):
-                    winningBoard = board
-                    solved = True
-                    break
+    drawn.append(d)
+    for boardNum in range(0,len(boardWinPossiblities)):
+        for b in boardWinPossiblities[boardNum]:
+            if set(b) <= set(drawn) and winningBoards.count(boardNum) == 0:
+                winningBoards.append(boardNum)
+                if len(winningBoards) == len(boardWinPossiblities) and lastCalled == -1:
+                    lastCalled = int(d)
+                    finalDrawn = drawn[:]
 
-lastCalled = int(drawn[-1])
-winningBoard = winningBoard[:5]
-winningBoard = [j for row in winningBoard for j in row] #flatten 2d array
-for d in drawn:
+lastWinner = winningBoards[-1]
+lastWinningBoard = boardWinPossiblities[lastWinner][:5]
+lastWinningBoard = [j for row in lastWinningBoard for j in row]  #flatten 2d array
+for d in finalDrawn:
     try:
-        winningBoard.remove(d)
+        lastWinningBoard.remove(d)
     except ValueError as e:
         continue
 
 sum = 0
-for w in winningBoard:
+print finalDrawn
+for w in lastWinningBoard:
     sum += int(w)
 
 print sum * lastCalled
