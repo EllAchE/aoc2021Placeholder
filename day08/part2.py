@@ -75,11 +75,9 @@ def createNumLetterMap(tenNumbersSet):
 
 
 total = 0
-checkCount = 0
 for line in formattedLst:
     numLetterMap = createNumLetterMap(line["input"])
     for item in line["output"]:
-        checkCount += 1
         compareItem = "".join(sorted(item))
         if len(item) == 2:
             total += 1
@@ -92,7 +90,3 @@ for line in formattedLst:
         else:
             total += numLetterMap[compareItem] # All works except that the outputs aren't ordered consistently
     print(total)
-
-
-print(checkCount)
-print(total)
