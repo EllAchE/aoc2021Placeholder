@@ -40,18 +40,24 @@ def createNumLetterMap(tenNumbersSet):
                 if charSetOf5["setVals"].issubset(charSetOf6["setVals"]):
                     totalSubsets += 1
                     if totalSubsets == 2:
-                        return charSetOf5
+                        test = charSetOf5
+
+        return test
 
     def findThreeAndNine(tempMap): # Requires 5 to be known and removed
         for charSetOf5 in tempMap[5]:
             for charSetOf6 in tempMap[6]:
                 if charSetOf5["setVals"].issubset(charSetOf6["setVals"]):
-                    return charSetOf5, charSetOf6
+                    a, b = charSetOf5, charSetOf6
+
+        return a, b
 
     def findSix(fiveStringSet, tempMap): # Requires above to be known and removed
         for charSetOf6 in tempMap[6]:
             if fiveStringSet["setVals"].issubset(charSetOf6["setVals"]):
-                return charSetOf6
+                test = charSetOf6
+
+        return test
 
     fiveSet = findFive(tempMap)
     tempMap[5].remove(fiveSet)
@@ -77,16 +83,19 @@ def createNumLetterMap(tenNumbersSet):
 total = 0
 for line in formattedLst:
     numLetterMap = createNumLetterMap(line["input"])
+    multiplier = 1000
     for item in line["output"]:
         compareItem = "".join(sorted(item))
         if len(item) == 2:
-            total += 1
+            total += 1 * multiplier
         elif len(item) == 3:
-            total += 7
+            total += 7 * multiplier
         elif len(item) == 4:
-            total += 4
+            total += 4 * multiplier
         elif len(item) == 7:
-            total += 8
+            total += 8 * multiplier
         else:
-            total += numLetterMap[compareItem] # All works except that the outputs aren't ordered consistently
-    print(total)
+            total += multiplier * numLetterMap[compareItem] # All works except that the outputs aren't ordered consistently
+        multiplier /= 10
+
+print(total)
