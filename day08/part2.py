@@ -40,24 +40,18 @@ def createNumLetterMap(tenNumbersSet):
                 if charSetOf5["setVals"].issubset(charSetOf6["setVals"]):
                     totalSubsets += 1
                     if totalSubsets == 2:
-                        test = charSetOf5
-
-        return test
+                        return charSetOf5
 
     def findThreeAndNine(tempMap): # Requires 5 to be known and removed
         for charSetOf5 in tempMap[5]:
             for charSetOf6 in tempMap[6]:
                 if charSetOf5["setVals"].issubset(charSetOf6["setVals"]):
-                    a, b = charSetOf5, charSetOf6
-
-        return a, b
+                    return charSetOf5, charSetOf6
 
     def findSix(fiveStringSet, tempMap): # Requires above to be known and removed
         for charSetOf6 in tempMap[6]:
             if fiveStringSet["setVals"].issubset(charSetOf6["setVals"]):
-                test = charSetOf6
-
-        return test
+                return charSetOf6
 
     fiveSet = findFive(tempMap)
     tempMap[5].remove(fiveSet)
