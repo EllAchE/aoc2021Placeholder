@@ -9,6 +9,15 @@ convertedInput = list(map(lambda a : list(a), lst))
 cMap = []
 cIndexLst = []
 
+#################
+# SOLUTION
+#################
+
+# I will be manually calculating each step. I'll maintain a list of cucumber objects and for each "step" I'll check if
+# they can move or not. The east and south steps can be considered separately, but 2 must occur for a counted step.
+# This will iterate until an east and south step both occur with no movement, which would mean no further steps will occur.
+# looking at cycles of the different cucumber rows could have a more elegant soln.
+
 def createMapAndList(lst):
     for inRow in lst:
         for item in inRow:
