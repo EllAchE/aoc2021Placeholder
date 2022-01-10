@@ -4,27 +4,33 @@ lst = [d.strip() for d in data]
 
 def inputCom(wxyz, varOne, initialInteger):
     wxyz[varOne] = initialInteger.pop()
+    return wxyz
 
 def addCom(wxyz, varOne, varTwo):
     wxyz[varOne] = wxyz[varOne] + varTwo
+    return wxyz
 
 def mulCom(wxyz, varOne, varTwo):
     wxyz[varOne] = wxyz[varOne] * varTwo
+    return wxyz
 
 def divCom(wxyz, varOne, varTwo):
     wxyz[varOne] = wxyz[varOne] / varTwo
+    return wxyz
 
 def modCom(wxyz, varOne, varTwo):
     wxyz[varOne] = wxyz[varOne] % varTwo
+    return wxyz
 
 def eqlCom(wxyz, varOne, varTwo):
     if wxyz[varOne] == varTwo:
         wxyz[varOne] = 1
     else:
         wxyz[varOne] = 0
+    return wxyz
 
 def parseInstruction(iptLine, wxyz, monadCode):
-    comm = iptLine[:2]
+    comm = iptLine[:3]
     varOne = iptLine[4]
 
     if len(iptLine) >= 7:
@@ -34,22 +40,19 @@ def parseInstruction(iptLine, wxyz, monadCode):
             varTwo = int(iptLine[6:])
 
     if comm == "inp":
-         inputCom(wxyz, varOne, monadCode)
+        wxyz = inputCom(wxyz, varOne, monadCode)
     elif comm == "mul":
-        mulCom(wxyz, varOne, varTwo)
+        wxyz = mulCom(wxyz, varOne, varTwo)
     elif comm == "add":
-        addCom(wxyz, varOne, varTwo)
+        wxyz = addCom(wxyz, varOne, varTwo)
     elif comm == "eql":
-        eqlCom(wxyz, varOne, varTwo)
+        wxyz = eqlCom(wxyz, varOne, varTwo)
     elif comm == "div":
-        divCom(wxyz, varOne, varTwo)
+        wxyz = divCom(wxyz, varOne, varTwo)
     elif comm == "mod":
-        modCom(wxyz, varOne, varTwo)
+        wxyz = modCom(wxyz, varOne, varTwo)
 
-
-initialInteger = [9, 9, 9, 9, 9,
-                  9, 9, 9, 9, 9,
-                  9, 9, 9, 9]
+    return wxyz
 
 def checkMonad(monadCode):
     wxyz = {
@@ -60,7 +63,37 @@ def checkMonad(monadCode):
     }
 
     for line in lst:
-        parseInstruction(line, wxyz, monadCode)
+        wxyz = parseInstruction(line, wxyz, monadCode)
 
     if wxyz["z"] == 0:
-        return True
+        return False
+    return True
+
+def incrementIntList(intList):
+    curIndex = -1
+    dontExit = True
+    while dontExit:
+        if intList[curIndex] > 1:
+            intList[curIndex] = intList[curIndex] - 1
+            dontExit = False
+        elif intList[curIndex] == 1:
+            intList[curIndex] = 9
+            curIndex -= 1
+
+    return intList
+
+
+initialInteger = [9, 9, 9, 9, 9,
+                  9, 9, 9, 9, 9,
+                  9, 9, 9, 10]
+
+shouldContinue = True
+i = 0
+while shouldContinue:
+    initialInteger = incrementIntList(initialInteger)
+    shouldContinue = checkMonad(initialInteger.copy())
+    i += 1
+
+    print("run num", i)
+    print(initialInteger)
+
