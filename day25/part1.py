@@ -3,6 +3,9 @@ data = open("input.txt").readlines()
 lst = [d.strip() for d in data]
 convertedInput = list(map(lambda a : list(a), lst))
 
+yLength = len(convertedInput)
+xLength = len(convertedInput[0])
+
 # cols = 10, rows = 9
 
 #################
@@ -48,7 +51,7 @@ def cucumberStep(cMap, cucumberIndexListIn):
     return anyMove # flipped my booleans...
 
 def checkIfCanMoveEast(cucumber, cMap):
-    if cucumber["x"] == 9: # map edge
+    if cucumber["x"] == xLength - 1: # map edge
         if cMap[cucumber["y"]][0] == ".":
             cucumber["canmove"] = True
         else:
@@ -60,7 +63,7 @@ def checkIfCanMoveEast(cucumber, cMap):
             cucumber["canmove"] = False
 
 def checkIfCanMoveSouth(cucumber, cMap):
-    if cucumber["y"] == 8: # map edge
+    if cucumber["y"] == yLength - 1: # map edge
         if cMap[0][cucumber["x"]] == ".":
             cucumber["canmove"] = True
         else:
@@ -73,13 +76,13 @@ def checkIfCanMoveSouth(cucumber, cMap):
 
 def moveEast(cucumber, cMap):
     cMap[cucumber["y"]][cucumber["x"]] = "."
-    cucumber["x"] = (cucumber["x"] + 1) % 10
+    cucumber["x"] = (cucumber["x"] + 1) % xLength
     cMap[cucumber["y"]][cucumber["x"]] = ">"
     cucumber["canmove"] = False
 
 def moveSouth(cucumber, cMap):
     cMap[cucumber["y"]][cucumber["x"]] = "."
-    cucumber["y"] = (cucumber["y"] + 1) % 9
+    cucumber["y"] = (cucumber["y"] + 1) % yLength
     cMap[cucumber["y"]][cucumber["x"]] = "v"
     cucumber["canmove"] = False
 
@@ -88,9 +91,7 @@ cucumberIndexList = createCucumberIndexList(convertedInput)
 isNotStuck = True
 stepCount = 0
 while isNotStuck: # does assume at least 1 step
-    print(cucumberIndexList)
     isNotStuck = cucumberStep(convertedInput, cucumberIndexList)
-    print(cucumberIndexList)
     stepCount += 1
 
 print(stepCount)
