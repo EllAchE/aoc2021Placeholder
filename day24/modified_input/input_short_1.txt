@@ -1,0 +1,2 @@
+inp z
+add z 1

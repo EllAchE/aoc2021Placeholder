@@ -1,0 +1,14 @@
+inp w
+set x z
+mod x 26
+add x 15
+eql x w
+eql x 0
+set y 25
+mul y x
+add y 1
+mul z y
+set y w
+add y 7
+mul y x
+add z y

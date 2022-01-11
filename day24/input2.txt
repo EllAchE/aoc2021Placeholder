@@ -16,6 +16,7 @@ add y w
 add y 1
 mul y x
 add z y
+
 inp w
 mul x 0
 add x z
@@ -34,6 +35,7 @@ add y w
 add y 7
 mul y x
 add z y
+
 inp w
 mul x 0
 add x z
@@ -52,6 +54,7 @@ add y w
 add y 13
 mul y x
 add z y
+
 inp w
 mul x 0
 add x z
@@ -70,6 +73,7 @@ add y w
 add y 10
 mul y x
 add z y
+
 inp w
 mul x 0
 add x z
@@ -88,6 +92,7 @@ add y w
 add y 0
 mul y x
 add z y
+
 inp w
 mul x 0
 add x z
@@ -255,6 +260,6 @@ add y 1
 mul z y
 mul y 0
 add y w
-add y 10 -- 
+add y 10 --
 mul y x -- x must be 0
 add z y
